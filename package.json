@@ -1,0 +1,20 @@
+{
+  "name": "bemmet",
+  "version": "1.0.0",
+  "description": "Simple Emmet-like tool to expand shorcuts into BEMJSON",
+  "keywords": [
+    "bem",
+    "bemjson",
+    "snippets",
+    "emmet"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "author": "Vladimir Grinenko <i@tadatuta.com>",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "bem-naming": "^0.5.1"
+  }
+}
