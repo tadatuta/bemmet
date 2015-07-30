@@ -1,6 +1,7 @@
-var bemNaming = require('bem-naming');
+var bemNaming = require('bem-naming'),
+    stringifyObj = require('stringify-object');
 
-function expandBemjson(str, opts) {
+var expandBemjson = function(str, opts) {
     opts || (opts = {});
 
     var naming = bemNaming(opts.naming),
@@ -72,6 +73,13 @@ function expandBemjson(str, opts) {
 
         return result;
     }, {});
+}
+
+expandBemjson.stringify = function(str, opts) {
+    opts || (opts = {});
+    opts.indent || (opts.indent = '    ');
+
+    return stringifyObj(expandBemjson(str, opts), opts);
 }
 
 module.exports = expandBemjson;

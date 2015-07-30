@@ -15,6 +15,7 @@
   "author": "Vladimir Grinenko <i@tadatuta.com>",
   "license": "MPL-2.0",
   "dependencies": {
-    "bem-naming": "^0.5.1"
+    "bem-naming": "^0.5.1",
+    "stringify-object": "^2.3.0"
   }
 }

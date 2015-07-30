@@ -5,9 +5,10 @@ Simple Emmet-like tool to expand shorcuts into [BEMJSON](https://en.bem.info/tec
 ## Usage
 ```js
 var bemmet = require('bemmet');
-var bemjson = bemmet('b1>__e1*2>b3_theme_islands+_state_active');
+var bemjson = bemmet('b1>__e1*2>b3_theme_islands+_state_active'); // object
+var bemjsonString = bemmet.stringify('b1>__e1*2>b3_theme_islands+_state_active');
 
-console.log(bemjson);
+console.log(bemjsonString);
 // {
 //     block: 'b1',
 //     content: [
@@ -51,7 +52,7 @@ console.log(bemjson);
 ```js
 var bemmet = require('bemmet');
 var shortcut = 'b1>__e1*2>b3--islands+--active';
-var bemjson = bemmet(shortcut, {
+var bemjson = bemmet.stringify(shortcut, {
     naming: {
         elem: '__',
         mod: '--'

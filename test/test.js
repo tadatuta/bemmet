@@ -1,4 +1,5 @@
-var assert = require('assert'),
+var EOL = require('os').EOL,
+    assert = require('assert'),
     inspect = require('util').inspect,
     bemmet = require('..');
 
@@ -83,10 +84,27 @@ var tests = [
                 }
             ]
         }
+    },
+    {
+        shortcut: 'b1>__e1',
+        stringify: true,
+        reference: [
+            "{",
+            "    block: 'b1',",
+            "    content: {",
+            "        block: 'b1',",
+            "        elem: 'e1',",
+            "        content: {}",
+            "    }",
+            "}"
+        ].join(EOL)
     }
 ];
 
 tests.forEach(function(test, idx) {
-    var bemjson = bemmet(test.shortcut, { naming: test.naming });
-    assert.deepEqual(bemjson, test.reference, 'Test #' + idx + ' failed');
+    var result = test.stringify ?
+            bemmet.stringify(test.shortcut, { naming: test.naming }) :
+            bemmet(test.shortcut, { naming: test.naming });
+
+    assert.deepEqual(result, test.reference, 'Test #' + idx + ' failed');
 });
