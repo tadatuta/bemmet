@@ -1,6 +1,6 @@
 {
   "name": "bemmet",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple Emmet-like tool to expand shorcuts into BEMJSON",
   "keywords": [
     "bem",
