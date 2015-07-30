@@ -2,6 +2,8 @@
 
 Simple Emmet-like tool to expand shorcuts into [BEMJSON](https://en.bem.info/technology/bemjson/).
 
+Also [available](https://atom.io/packages/atom-bemmet) as Atom plugin.
+
 ## Usage
 ```js
 var bemmet = require('bemmet');
