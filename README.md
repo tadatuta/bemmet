@@ -7,8 +7,8 @@ Also [available](https://atom.io/packages/atom-bemmet) as Atom plugin.
 ## Usage
 ```js
 var bemmet = require('bemmet');
-var bemjson = bemmet('b1>__e1*2>b3_theme_islands+_state_active'); // object
-var bemjsonString = bemmet.stringify('b1>__e1*2>b3_theme_islands+_state_active');
+var bemjson = bemmet('b1>__e1*2>b3_theme_islands+_state_active{hello}'); // object
+var bemjsonString = bemmet.stringify('b1>__e1*2>b3_theme_islands+_state_active{hello}');
 
 console.log(bemjsonString);
 // {
@@ -26,7 +26,7 @@ console.log(bemjsonString);
 //                 {
 //                     block: 'b1',
 //                     mods: { state: 'active' },
-//                     content: {}
+//                     content: 'hello'
 //                 }
 //             ]
 //         },
@@ -42,7 +42,7 @@ console.log(bemjsonString);
 //                 {
 //                     block: 'b1',
 //                     mods: { state: 'active' },
-//                     content: {}
+//                     content: 'hello'
 //                 }
 //             ]
 //         }

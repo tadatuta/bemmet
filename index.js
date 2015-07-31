@@ -40,6 +40,13 @@ var expandBemjson = function(str, opts) {
             item = getParent(idx) + item;
         }
 
+        // E.g. 'b1{some content}'
+        var contentChunks = /([\w\d-]+)(?:\s)?\{(?:\s)?(.*)(?:\s)?\}/.exec(item);
+        if (contentChunks) {
+            item = contentChunks[1];
+            content = contentChunks[2];
+        }
+
         var entity = naming.parse(item);
 
         if (entity.modName) {
@@ -60,7 +67,7 @@ var expandBemjson = function(str, opts) {
         item = item.trim();
 
         // E.g. 'b1 * 2'
-        var mult = /([\w\d-]+)(?:\s)?\*(?:\s)?(\d)/.exec(item);
+        var mult = /(.+)(?:\s)?\*(?:\s)?(\d)/.exec(item);
         if (!mult) return expandEntities(content, item, idx);
 
         var result = [],

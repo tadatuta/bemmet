@@ -45,6 +45,42 @@ var tests = [
         }
     },
     {
+        shortcut: 'b1>__e1{some content}*2',
+        reference: {
+            block: 'b1',
+            content: [
+                {
+                    block: 'b1',
+                    elem: 'e1',
+                    content: 'some content'
+                },
+                {
+                    block: 'b1',
+                    elem: 'e1',
+                    content: 'some content'
+                }
+            ]
+        }
+    },
+    {
+        shortcut: 'parent > __e1{content of b1} + __e2{some other content}',
+        reference: {
+            block: 'parent',
+            content: [
+                {
+                    block: 'parent',
+                    elem: 'e1',
+                    content: 'content of b1'
+                },
+                {
+                    block: 'parent',
+                    elem: 'e2',
+                    content: 'some other content'
+                }
+            ]
+        }
+    },
+    {
         shortcut: 'b1>__e1*2>b3--islands+--active',
         naming: { elem: '__', mod: '--' },
         reference: {
@@ -106,5 +142,11 @@ tests.forEach(function(test, idx) {
             bemmet.stringify(test.shortcut, { naming: test.naming }) :
             bemmet(test.shortcut, { naming: test.naming });
 
-    assert.deepEqual(result, test.reference, 'Test #' + idx + ' failed');
+    try {
+        assert.deepEqual(result, test.reference, 'Test #' + idx + ' failed');
+    } catch(err) {
+        console.log('result', result);
+        console.log('expected', test.reference);
+        throw new Error(err);
+    }
 });
