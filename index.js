@@ -28,13 +28,31 @@ var expandBemjson = function(str, opts) {
         // E.g. 'b1 + b1'
         if (item.indexOf('+') < 0) return expandEntity(content, item, idx);
 
-        return item.split('+').map(function(item) {
+        var result = [];
+
+        item.split('+').forEach(function(item) {
             item = item.trim();
-            return expandEntity(content, item, idx);
+            result = result.concat(expandEntity(content, item, idx));
         });
+
+        return result;
     }
 
     function expandEntity(content, item, idx) {
+        // E.g. 'b1 * 2'
+        var mult = /(.+)(?:\s)?\*(?:\s)?(\d)/.exec(item);
+        if (mult) {
+            var result = [],
+                item = mult[1],
+                times = +mult[2];
+
+            for (var i = 0; i < times; i++) {
+                result.push(expandEntity(content, item, idx));
+            }
+
+            return result;
+        }
+
         // expand mods and elems shotcuts by context (e.g. __e1 -> parent__e1)
         if (isShortcut(item)) {
             item = getParent(idx) + item;
@@ -66,19 +84,7 @@ var expandBemjson = function(str, opts) {
     return tree.reduce(function(content, item, idx) {
         item = item.trim();
 
-        // E.g. 'b1 * 2'
-        var mult = /(.+)(?:\s)?\*(?:\s)?(\d)/.exec(item);
-        if (!mult) return expandEntities(content, item, idx);
-
-        var result = [],
-            item = mult[1],
-            times = +mult[2];
-
-        for (var i = 0; i < times; i++) {
-            result.push(expandEntities(content, item, idx));
-        }
-
-        return result;
+        return expandEntities(content, item, idx);
     }, {});
 }
 

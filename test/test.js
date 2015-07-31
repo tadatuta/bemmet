@@ -81,6 +81,42 @@ var tests = [
         }
     },
     {
+        shortcut: 'parent > __e1{content of b1} + __e2{some other content}*2',
+        reference: {
+            block: 'parent',
+            content: [
+                {
+                    block: 'parent',
+                    elem: 'e1',
+                    content: 'content of b1'
+                },
+                {
+                    block: 'parent',
+                    elem: 'e2',
+                    content: 'some other content'
+                },
+                {
+                    block: 'parent',
+                    elem: 'e2',
+                    content: 'some other content'
+                }
+            ]
+        }
+    },
+    {
+        shortcut: 'b1{some text}*2',
+        reference: [
+            {
+                block: 'b1',
+                content: 'some text'
+            },
+            {
+                block: 'b1',
+                content: 'some text'
+            }
+        ]
+    },
+    {
         shortcut: 'b1>__e1*2>b3--islands+--active',
         naming: { elem: '__', mod: '--' },
         reference: {
