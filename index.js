@@ -84,6 +84,17 @@ var expandBemjson = function(str, opts) {
     return tree.reduce(function(content, item, idx) {
         item = item.trim();
 
+        var parentheses = /\((.*)\)(?:\s)?\*(?:\s)?(\d)/.exec(item);
+        if (parentheses) {
+            var result = [];
+
+            for (var i = 0, times = parentheses[2]; i < times; i++) {
+                result = result.concat(expandEntities(content, parentheses[1], idx));
+            }
+
+            return result;
+        }
+
         return expandEntities(content, item, idx);
     }, {});
 }

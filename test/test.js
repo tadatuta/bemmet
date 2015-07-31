@@ -158,6 +158,44 @@ var tests = [
         }
     },
     {
+        shortcut: 'b1+b2*2',
+        reference: [
+            {
+                block: 'b1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                content: {}
+            },
+            {
+                block: 'b2',
+                content: {}
+            }
+        ]
+    },
+    {
+        shortcut: '(b1+b2)*2',
+        reference: [
+            {
+                block: 'b1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                content: {}
+            },
+            {
+                block: 'b1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                content: {}
+            }
+        ]
+    },
+    {
         shortcut: 'b1>__e1',
         stringify: true,
         reference: [
