@@ -3,7 +3,7 @@
 Simple Emmet-like tool to expand shorcuts into [BEMJSON](https://en.bem.info/technology/bemjson/).
 Check out [online demo](http://tadatuta.github.io/bemmet/).
 
-Also [available](https://atom.io/packages/atom-bemmet) as Atom plugin.
+Also available as [Sublime Text](https://github.com/tadatuta/sublime-bemmet) and [Atom](https://atom.io/packages/atom-bemmet) plugins.
 
 ## Usage
 ```js
