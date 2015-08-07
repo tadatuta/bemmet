@@ -23,23 +23,29 @@ var expandBemjson = function(str, parentBlock, opts) {
             idx++;
             parent = tree[idx].trim();
 
+            // b1+b2>__e1
+            parent = parent.substr(parent.lastIndexOf('+') + 1);
+
             if (!isShortcut(parent)) {
                 return naming.parse(parent).block;
             }
         }
 
-        return parentBlock;
+        return parentBlock || 'parent';
     }
 
     function expandEntities(content, item, idx) {
         // E.g. 'b1 + b1'
         if (item.indexOf('+') < 0) return expandEntity(content, item, idx);
 
-        var result = [];
+        var result = [],
+            items = item.split('+');
 
-        item.split('+').forEach(function(item) {
+        items.forEach(function(item, index) {
+            var isLast = index === items.length - 1;
+
             item = item.trim();
-            result = result.concat(expandEntity(content, item, idx));
+            result = result.concat(expandEntity(isLast ? content : {}, item, idx));
         });
 
         return result;

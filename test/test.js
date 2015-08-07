@@ -237,6 +237,68 @@ var tests = [
             "}"
         ].join(EOL)
     },
+    {
+        abbreviation: 'b1+b2>b3__e1',
+        reference: [
+            {
+                block: 'b1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                content: {
+                    block: 'b3',
+                    elem: 'e1',
+                    content: {}
+                }
+            }
+        ]
+    },
+    {
+        abbreviation: '__e1+b2__e2>__e3',
+        parentBlock: 'b1',
+        reference: [
+            {
+                block: 'b1',
+                elem: 'e1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                elem: 'e2',
+                content: {
+                    block: 'b2',
+                    elem: 'e3',
+                    content: {}
+                }
+            }
+        ]
+    },
+    {
+        abbreviation: '__e1+b2__e2+b3_m1>__e3',
+        parentBlock: 'b1',
+        reference: [
+            {
+                block: 'b1',
+                elem: 'e1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                elem: 'e2',
+                content: {}
+            },
+            {
+                block: 'b3',
+                mods: { m1: true },
+                content: {
+                    block: 'b3',
+                    elem: 'e3',
+                    content: {}
+                }
+            }
+        ]
+    }
 ];
 
 tests.forEach(function(test, idx) {
