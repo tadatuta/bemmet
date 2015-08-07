@@ -68,7 +68,7 @@ var expandBemjson = function(str, parentBlock, opts) {
 
         // expand mods and elems shotcuts by context (e.g. __e1 -> parent__e1)
         if (isShortcut(item)) {
-            item = (parent || parentBlock || '__parentBlockStub__') + item;
+            item = (parent || parentBlock || 'parentBlockStubPlaceholder') + item;
         }
 
         // E.g. 'b1{some content}'
@@ -81,7 +81,7 @@ var expandBemjson = function(str, parentBlock, opts) {
         var entity = naming.parse(item);
 
         if (entity.modName) {
-            entity.block === '__parentBlockStub__' && (entity.block === 'parent');
+            entity.block === 'parentBlockStubPlaceholder' && (entity.block === 'parent');
 
             var modFieldName = entity.elem ? 'elemMods' : 'mods';
 
@@ -92,7 +92,7 @@ var expandBemjson = function(str, parentBlock, opts) {
         }
 
         // remove block field if it matches its parent block name
-        if (naming.isElem(entity) && entity.block === parent || entity.block === '__parentBlockStub__') {
+        if (naming.isElem(entity) && entity.block === parent || entity.block === 'parentBlockStubPlaceholder') {
             delete entity.block;
         }
 

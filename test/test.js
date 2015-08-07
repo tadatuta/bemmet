@@ -284,6 +284,41 @@ var tests = [
                 }
             }
         ]
+    },
+    {
+        abbreviation: 'b1__e1_m1_v1',
+        reference: {
+            block: 'b1',
+            elem: 'e1',
+            elemMods: {
+                m1: 'v1'
+            },
+            content: {}
+        }
+    },
+    {
+        abbreviation: '__e1',
+        reference: {
+            elem: 'e1',
+            content: {}
+        }
+    },
+    {
+        abbreviation: '_m1',
+        reference: {
+            mods: { m1: true },
+            content: {}
+        }
+    },
+    {
+        abbreviation: '_m1>__e1',
+        reference: {
+            mods: { m1: true },
+            content: {
+                elem: 'e1',
+                content: {}
+            }
+        }
     }
 ];
 
