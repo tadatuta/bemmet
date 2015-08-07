@@ -5,7 +5,7 @@ var EOL = require('os').EOL,
 
 var tests = [
     {
-        shortcut: 'b1>__e1*2>b3_theme_islands+_state_active',
+        abbreviation: 'b1>__e1*2>b3_theme_islands+_state_active',
         reference: {
             block: 'b1',
             content: [
@@ -45,7 +45,7 @@ var tests = [
         }
     },
     {
-        shortcut: 'b1>__e1{some content}*2',
+        abbreviation: 'b1>__e1{some content}*2',
         reference: {
             block: 'b1',
             content: [
@@ -63,7 +63,7 @@ var tests = [
         }
     },
     {
-        shortcut: 'parent > __e1{content of b1} + __e2{some other content}',
+        abbreviation: 'parent > __e1{content of b1} + __e2{some other content}',
         reference: {
             block: 'parent',
             content: [
@@ -81,7 +81,7 @@ var tests = [
         }
     },
     {
-        shortcut: 'parent > __e1{content of b1} + __e2{some other content}*2',
+        abbreviation: 'parent > __e1{content of b1} + __e2{some other content}*2',
         reference: {
             block: 'parent',
             content: [
@@ -104,7 +104,7 @@ var tests = [
         }
     },
     {
-        shortcut: 'b1{some text}*2',
+        abbreviation: 'b1{some text}*2',
         reference: [
             {
                 block: 'b1',
@@ -117,7 +117,7 @@ var tests = [
         ]
     },
     {
-        shortcut: 'b1>__e1*2>b3--islands+--active',
+        abbreviation: 'b1>__e1*2>b3--islands+--active',
         naming: { elem: '__', mod: '--' },
         reference: {
             block: 'b1',
@@ -158,7 +158,7 @@ var tests = [
         }
     },
     {
-        shortcut: 'b1+b2*2',
+        abbreviation: 'b1+b2*2',
         reference: [
             {
                 block: 'b1',
@@ -175,7 +175,7 @@ var tests = [
         ]
     },
     {
-        shortcut: '(b1+b2)*2',
+        abbreviation: '(b1+b2)*2',
         reference: [
             {
                 block: 'b1',
@@ -196,7 +196,7 @@ var tests = [
         ]
     },
     {
-        shortcut: 'b1>__e1',
+        abbreviation: 'b1>__e1',
         stringify: true,
         reference: [
             "{",
@@ -208,13 +208,41 @@ var tests = [
             "    }",
             "}"
         ].join(EOL)
-    }
+    },
+    {
+        abbreviation: 'b1__e1+__e1',
+        parentBlock: 'b2',
+        reference: [
+            {
+                block: 'b1',
+                elem: 'e1',
+                content: {}
+            },
+            {
+                block: 'b2',
+                elem: 'e1',
+                content: {}
+            }
+        ]
+    },
+    {
+        abbreviation: '__e1',
+        stringify: true,
+        parentBlock: 'b1',
+        reference: [
+            "{",
+            "    block: 'b1',",
+            "    elem: 'e1',",
+            "    content: {}",
+            "}"
+        ].join(EOL)
+    },
 ];
 
 tests.forEach(function(test, idx) {
     var result = test.stringify ?
-            bemmet.stringify(test.shortcut, { naming: test.naming }) :
-            bemmet(test.shortcut, { naming: test.naming });
+            bemmet.stringify(test.abbreviation, test.parentBlock, { naming: test.naming }) :
+            bemmet(test.abbreviation, test.parentBlock, { naming: test.naming });
 
     try {
         assert.deepEqual(result, test.reference, 'Test #' + idx + ' failed');

@@ -1,6 +1,6 @@
 # bemmet
 
-Simple Emmet-like tool to expand shorcuts into [BEMJSON](https://en.bem.info/technology/bemjson/).
+Simple Emmet-like tool to expand abbreviations into [BEMJSON](https://en.bem.info/technology/bemjson/).
 Check out [online demo](http://tadatuta.github.io/bemmet/).
 
 Also available as [Sublime Text](https://github.com/tadatuta/sublime-bemmet) and [Atom](https://atom.io/packages/atom-bemmet) plugins.
@@ -54,8 +54,8 @@ console.log(bemjsonString);
 ### Custom naming scheme
 ```js
 var bemmet = require('bemmet');
-var shortcut = 'b1>__e1*2>b3--islands+--active';
-var bemjson = bemmet.stringify(shortcut, {
+var abbreviation = 'b1>__e1*2>b3--islands+--active';
+var bemjson = bemmet.stringify(abbreviation, {
     naming: {
         elem: '__',
         mod: '--'

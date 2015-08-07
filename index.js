@@ -1,7 +1,12 @@
 var bemNaming = require('bem-naming'),
     stringifyObj = require('stringify-object');
 
-var expandBemjson = function(str, opts) {
+var expandBemjson = function(str, parentBlock, opts) {
+    if (typeof parentBlock === 'object') {
+        opts = parentBlock;
+        parentBlock = null;
+    }
+
     opts || (opts = {});
 
     var naming = bemNaming(opts.naming),
@@ -14,7 +19,7 @@ var expandBemjson = function(str, opts) {
     function getParent(idx) {
         var parent;
 
-        while(idx < tree.length) {
+        while(idx < tree.length - 1) {
             idx++;
             parent = tree[idx].trim();
 
@@ -22,6 +27,8 @@ var expandBemjson = function(str, opts) {
                 return naming.parse(parent).block;
             }
         }
+
+        return parentBlock;
     }
 
     function expandEntities(content, item, idx) {
@@ -99,11 +106,16 @@ var expandBemjson = function(str, opts) {
     }, {});
 }
 
-expandBemjson.stringify = function(str, opts) {
+expandBemjson.stringify = function(str, parentBlock, opts) {
+    if (typeof parentBlock === 'object') {
+        opts = parentBlock;
+        parentBlock = null;
+    }
+
     opts || (opts = {});
     opts.indent || (opts.indent = '    ');
 
-    return stringifyObj(expandBemjson(str, opts), opts);
+    return stringifyObj(expandBemjson(str, parentBlock, opts), opts);
 }
 
 module.exports = expandBemjson;
