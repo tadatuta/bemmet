@@ -10,7 +10,6 @@ var tests = [
             block: 'b1',
             content: [
                 {
-                    block: 'b1',
                     elem: 'e1',
                     content: [
                         {
@@ -26,7 +25,6 @@ var tests = [
                     ]
                 },
                 {
-                    block: 'b1',
                     elem: 'e1',
                     content: [
                         {
@@ -50,12 +48,10 @@ var tests = [
             block: 'b1',
             content: [
                 {
-                    block: 'b1',
                     elem: 'e1',
                     content: 'some content'
                 },
                 {
-                    block: 'b1',
                     elem: 'e1',
                     content: 'some content'
                 }
@@ -68,12 +64,10 @@ var tests = [
             block: 'parent',
             content: [
                 {
-                    block: 'parent',
                     elem: 'e1',
                     content: 'content of b1'
                 },
                 {
-                    block: 'parent',
                     elem: 'e2',
                     content: 'some other content'
                 }
@@ -86,17 +80,14 @@ var tests = [
             block: 'parent',
             content: [
                 {
-                    block: 'parent',
                     elem: 'e1',
                     content: 'content of b1'
                 },
                 {
-                    block: 'parent',
                     elem: 'e2',
                     content: 'some other content'
                 },
                 {
-                    block: 'parent',
                     elem: 'e2',
                     content: 'some other content'
                 }
@@ -123,7 +114,6 @@ var tests = [
             block: 'b1',
             content: [
                 {
-                    block: 'b1',
                     elem: 'e1',
                     content: [
                         {
@@ -139,7 +129,6 @@ var tests = [
                     ]
                 },
                 {
-                    block: 'b1',
                     elem: 'e1',
                     content: [
                         {
@@ -202,7 +191,6 @@ var tests = [
             "{",
             "    block: 'b1',",
             "    content: {",
-            "        block: 'b1',",
             "        elem: 'e1',",
             "        content: {}",
             "    }",
@@ -267,7 +255,6 @@ var tests = [
                 block: 'b2',
                 elem: 'e2',
                 content: {
-                    block: 'b2',
                     elem: 'e3',
                     content: {}
                 }
@@ -292,7 +279,6 @@ var tests = [
                 block: 'b3',
                 mods: { m1: true },
                 content: {
-                    block: 'b3',
                     elem: 'e3',
                     content: {}
                 }
@@ -309,6 +295,7 @@ tests.forEach(function(test, idx) {
     try {
         assert.deepEqual(result, test.reference, 'Test #' + idx + ' failed');
     } catch(err) {
+        console.log('abbreviation', test.abbreviation);
         console.log('result', result);
         console.log('expected', test.reference);
         throw new Error(err);

@@ -16,7 +16,6 @@ console.log(bemjsonString);
 //     block: 'b1',
 //     content: [
 //         {
-//             block: 'b1',
 //             elem: 'e1',
 //             content: [
 //                 {
@@ -32,7 +31,6 @@ console.log(bemjsonString);
 //             ]
 //         },
 //         {
-//             block: 'b1',
 //             elem: 'e1',
 //             content: [
 //                 {
@@ -67,7 +65,6 @@ console.log(bemjson);
 //     block: 'b1',
 //     content: [
 //         {
-//             block: 'b1',
 //             elem: 'e1',
 //             content: [
 //                 {
@@ -83,7 +80,6 @@ console.log(bemjson);
 //             ]
 //         },
 //         {
-//             block: 'b1',
 //             elem: 'e1',
 //             content: [
 //                 {
