@@ -101,3 +101,14 @@ console.log(bemjson);
 //     ]
 // }
 ```
+
+### API
+```js
+bemmet(abbreviation, [parentBlock], [options]); // object
+bemmet.stringify(abbreviation, [parentBlock], [options]); // string
+```
+`parentBlock` is used to explicitly define context for shortcuts like `__elem` when there's no parent block in abbreviation itself.
+
+`options.naming` is used to configure BEM naming scheme. For details please refer to [bem-naming](https://en.bem.info/tools/bem/bem-naming/).
+
+For `stringify()` method it's possible to configure indentation and quotes via `options.indent` (string) and `options.singleQuotes` (boolean) params.
