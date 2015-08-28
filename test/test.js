@@ -319,6 +319,10 @@ var tests = [
                 content: {}
             }
         }
+    },
+    {
+        abbreviation: 'so_me_unparseable_stri_ng',
+        reference: 'so_me_unparseable_stri_ng'
     }
 ];
 

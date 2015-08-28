@@ -79,6 +79,7 @@ var expandBemjson = function(str, parentBlock, opts) {
         }
 
         var entity = naming.parse(item);
+        if (!entity) return item;
 
         if (entity.modName) {
             entity.block === 'parentBlockStubPlaceholder' && (entity.block === 'parent');
@@ -128,7 +129,9 @@ expandBemjson.stringify = function(str, parentBlock, opts) {
     opts || (opts = {});
     opts.indent || (opts.indent = '    ');
 
-    return stringifyObj(expandBemjson(str, parentBlock, opts), opts);
+    var bemjson = expandBemjson(str, parentBlock, opts);
+
+    return typeof bemjson === 'string' ? bemjson : stringifyObj(bemjson, opts);
 }
 
 module.exports = expandBemjson;
