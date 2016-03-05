@@ -1,0 +1,33 @@
+{
+  "author": "",
+  "name": "bem-project-stub",
+  "version": "1.2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bem/project-stub.git"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "bower": "^1.7.7"
+  },
+  "devDependencies": {
+    "bem": "^0.10.2",
+    "borschik-tech-cleancss": "^2.1.0",
+    "browserify": "^13.0.0",
+    "enb": "^1.1.2",
+    "enb-bem-techs": "^2.2.1",
+    "enb-bemxjst": "^5.0.0",
+    "enb-borschik": "^2.3.0",
+    "enb-js": "^1.1.0",
+    "enb-stylus": "^2.2.0"
+  },
+  "scripts": {
+    "start": "enb server",
+    "postinstall": "npm run deps",
+    "deps": "bower i",
+    "make": "browserify --entry ../bemmet/index.js --standalone bemmet --outfile common.blocks/bemmet/bemmet.js"
+  },
+  "private": true
+}
