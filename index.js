@@ -1,85 +1,48 @@
 var bemNaming = require('bem-naming'),
-    stringifyObj = require('stringify-object');
+    stringifyObj = require('stringify-object'),
+    parser = require('emmet/lib/parser/abbreviation');
 
-var expandBemjson = function(str, parentBlock, opts) {
+function expandBemjson(abbreviation, parentBlock, opts) {
     if (typeof parentBlock === 'object') {
         opts = parentBlock;
         parentBlock = null;
     }
 
     opts || (opts = {});
-
-    var naming = bemNaming(opts.naming),
-        tree = str.split('>').reverse();
+    var naming = bemNaming(opts.naming);
 
     function isShortcut(item) {
         return (item[0] === naming.elemDelim[0]) || (item[0] === naming.modDelim[0]);
     }
 
-    function getParent(idx) {
-        var parent;
+    function getParent(tree) {
+        var parent = tree.parent,
+            name = parent.name();
 
-        while(idx < tree.length - 1) {
-            idx++;
-            parent = tree[idx].trim();
+        if (!parent || !name) return;
 
-            // b1+b2>__e1
-            parent = parent.substr(parent.lastIndexOf('+') + 1);
-
-            if (!isShortcut(parent)) {
-                return naming.parse(parent).block;
-            }
-        }
+        return isShortcut(name) ? getParent(parent) : bemNaming.parse(name).block;
     }
 
-    function expandEntities(content, item, idx) {
-        // E.g. 'b1 + b1'
-        if (item.indexOf('+') < 0) return expandEntity(content, item, idx);
-
-        var result = [],
-            items = item.split('+');
-
-        items.forEach(function(item, index) {
-            var isLast = index === items.length - 1;
-
-            item = item.trim();
-            result = result.concat(expandEntity(isLast ? content : {}, item, idx));
-        });
-
-        return result;
-    }
-
-    function expandEntity(content, item, idx) {
-        // E.g. 'b1 * 2'
-        var mult = /(.+)(?:\s)?\*(?:\s)?(\d)/.exec(item);
-        if (mult) {
-            var result = [],
-                item = mult[1],
-                times = +mult[2];
-
-            for (var i = 0; i < times; i++) {
-                result.push(expandEntity(content, item, idx));
-            }
-
-            return result;
+    function walk(tree) {
+        if (!tree.abbreviation) {
+            var bemjson = tree.children.map(walk);
+            if (!bemjson.length) return;
+            return bemjson.length === 1 ? bemjson[0] : bemjson;
         }
 
-        var parent = getParent(idx);
+        var item = tree.name(),
+            parent = getParent(tree);
 
-        // expand mods and elems shotcuts by context (e.g. __e1 -> parent__e1)
         if (isShortcut(item)) {
             item = (parent || parentBlock || 'parentBlockStubPlaceholder') + item;
         }
 
-        // E.g. 'b1{some content}'
-        var contentChunks = /([\w\d-]+)(?:\s)?\{(?:\s)?(.*)(?:\s)?\}/.exec(item);
-        if (contentChunks) {
-            item = contentChunks[1];
-            content = contentChunks[2];
-        }
-
         var entity = naming.parse(item);
         if (!entity) return item;
+
+        var content = (tree.content ? [tree.content] : [])
+                .concat(tree.children.map(walk));
 
         if (entity.modName) {
             entity.block === 'parentBlockStubPlaceholder' && (entity.block === 'parent');
@@ -97,30 +60,22 @@ var expandBemjson = function(str, parentBlock, opts) {
             delete entity.block;
         }
 
-        entity.content = content;
+        if (!content.length) {
+            entity.content = {};
+        } else {
+            entity.content = content.length === 1 ? content[0] : content;
+        }
 
         return entity;
     }
 
-    return tree.reduce(function(content, item, idx) {
-        item = item.trim();
+    var tree = parser.parse(abbreviation);
 
-        var parentheses = /\((.*)\)(?:\s)?\*(?:\s)?(\d)/.exec(item);
-        if (parentheses) {
-            var result = [];
+    return walk(tree);
+};
 
-            for (var i = 0, times = parentheses[2]; i < times; i++) {
-                result = result.concat(expandEntities(content, parentheses[1], idx));
-            }
-
-            return result;
-        }
-
-        return expandEntities(content, item, idx);
-    }, {});
-}
-
-expandBemjson.stringify = function(str, parentBlock, opts) {
+module.exports = expandBemjson;
+module.exports.stringify = function(abbreviation, parentBlock, opts) {
     if (typeof parentBlock === 'object') {
         opts = parentBlock;
         parentBlock = null;
@@ -129,9 +84,7 @@ expandBemjson.stringify = function(str, parentBlock, opts) {
     opts || (opts = {});
     opts.indent || (opts.indent = '    ');
 
-    var bemjson = expandBemjson(str, parentBlock, opts);
+    var bemjson = expandBemjson(abbreviation, parentBlock, opts);
 
     return typeof bemjson === 'string' ? bemjson : stringifyObj(bemjson, opts);
-}
-
-module.exports = expandBemjson;
+};

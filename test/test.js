@@ -59,7 +59,7 @@ var tests = [
         }
     },
     {
-        abbreviation: 'parent > __e1{content of b1} + __e2{some other content}',
+        abbreviation: 'parent>__e1{content of b1}+__e2{some other content}',
         reference: {
             block: 'parent',
             content: [
@@ -75,7 +75,7 @@ var tests = [
         }
     },
     {
-        abbreviation: 'parent > __e1{content of b1} + __e2{some other content}*2',
+        abbreviation: 'parent>__e1{content of b1}+__e2{some other content}*2',
         reference: {
             block: 'parent',
             content: [
