@@ -3,7 +3,7 @@
 Simple Emmet-like tool to expand abbreviations into [BEMJSON](https://en.bem.info/technology/bemjson/).
 Check out [online demo](http://tadatuta.github.io/bemmet/).
 
-Also available as [Sublime Text](https://github.com/tadatuta/sublime-bemmet), [Atom](https://atom.io/packages/atom-bemmet) and [IntelliJ *](https://github.com/amel-true/bemmet-idea) plugins.
+Also available as [Sublime Text](https://github.com/tadatuta/sublime-bemmet), [VS Code](https://marketplace.visualstudio.com/items?itemName=volkov97.vscode-bemmet), [Atom](https://atom.io/packages/atom-bemmet) and [IntelliJ *](https://github.com/amel-true/bemmet-idea) plugins.
 
 ## Usage
 ```js
